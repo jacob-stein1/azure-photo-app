@@ -1,0 +1,40 @@
+name: Deploy to Azure Functions from API1
+
+on:
+  push:
+    branches: ["main"]
+    paths: ["Node/API1/**"]
+  workflow_dispatch:
+
+env:
+  AZURE_FUNCTIONAPP_NAME: "519-function-1"
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: "Node/API1"
+  NODE_VERSION: "18.x"
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest # For Linux, use ubuntu-latest
+    environment: dev
+    steps:
+      - name: "Checkout GitHub Action"
+        uses: actions/checkout@v3
+      - name: Setup Node ${{ env.NODE_VERSION }} Environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: "Resolve Project Dependencies Using Npm"
+        shell: bash # For Linux, use bash
+        run: |
+          pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
+          npm install
+          npm run build --if-present
+          npm run test --if-present
+          popd
+
+      - name: "Run Azure Functions Action"
+        uses: Azure/functions-action@v1
+        id: fa
+        with:
+          app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
+          package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
+          publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }} # Remove publish-profile to use Azure RBAC

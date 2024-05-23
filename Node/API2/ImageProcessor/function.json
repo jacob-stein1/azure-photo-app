@@ -1,0 +1,27 @@
+{
+  "bindings": [
+    {
+      "name": "myQueueItem",
+      "type": "queueTrigger",
+      "direction": "in",
+      "queueName": "vision-queue",
+      "connection": "AzureWebJobsStorage"
+    },
+    {
+      "type": "cosmosDB",
+      "direction": "out",
+      "name": "document",
+      "databaseName": "jacob-db",
+      "collectionName": "images",
+      "connectionStringSetting": "COSMOS_DB_CONNECTION_STRING",
+      "createIfNotExists": true
+    },
+    {
+      "type": "queue",
+      "direction": "out",
+      "name": "completedQueueItem",
+      "queueName": "completed-queue",
+      "connection": "AzureWebJobsQUEUE_ACCESS_KEY"
+    }
+  ]
+}

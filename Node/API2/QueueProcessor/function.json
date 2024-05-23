@@ -1,0 +1,40 @@
+{
+  "bindings": [
+    {
+      "name": "myQueueItem",
+      "type": "queueTrigger",
+      "direction": "in",
+      "queueName": "jacob-stein-queue",
+      "connection": "AzureWebJobsQUEUE_ACCESS_KEY"
+    },
+    {
+      "name": "myInputBlob",
+      "type": "blob",
+      "dataType": "binary",
+      "path": "image-blob/{queueTrigger}",
+      "connection": "AzureWebJobsQUEUE_ACCESS_KEY",
+      "direction": "in"
+    },
+    {
+      "name": "downsizedBlob",
+      "type": "blob",
+      "path": "downsized-blob/{queueTrigger}",
+      "connection": "AzureWebJobsQUEUE_ACCESS_KEY",
+      "direction": "out"
+    },
+    {
+      "name": "thumbnailBlob",
+      "type": "blob",
+      "path": "thumbnail-blob/{queueTrigger}",
+      "connection": "AzureWebJobsQUEUE_ACCESS_KEY",
+      "direction": "out"
+    },
+    {
+      "type": "queue",
+      "direction": "out",
+      "name": "visionQueueItem",
+      "queueName": "vision-queue",
+      "connection": "AzureWebJobsQUEUE_ACCESS_KEY"
+    }
+  ]
+}

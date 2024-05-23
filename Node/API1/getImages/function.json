@@ -1,0 +1,26 @@
+{
+  "bindings": [
+    {
+      "authLevel": "anonymous",
+      "type": "httpTrigger",
+      "direction": "in",
+      "name": "req",
+      "methods": ["get"]
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "res"
+    },
+    {
+      "type": "cosmosDB",
+      "name": "documents",
+      "databaseName": "jacob-db",
+      "collectionName": "images",
+      "sqlQuery": "SELECT * FROM c",
+      "connectionStringSetting": "COSMOS_DB_CONNECTION_STRING",
+      "direction": "in"
+    }
+  ],
+  "scriptFile": "../dist/getImages/index.js"
+}

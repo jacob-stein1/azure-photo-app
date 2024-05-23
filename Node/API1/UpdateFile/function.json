@@ -1,0 +1,32 @@
+{
+  "bindings": [
+    {
+      "authLevel": "anonymous",
+      "type": "httpTrigger",
+      "direction": "in",
+      "route": "UpdateFile/{filename}",
+      "name": "req",
+      "methods": ["get", "post"]
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "res"
+    },
+    {
+      "type": "queue",
+      "direction": "out",
+      "name": "outputQueueItem",
+      "queueName": "jacob-stein-queue",
+      "connection": "QUEUE_ACCESS_KEY"
+    },
+    {
+      "name": "outputBlob",
+      "type": "blob",
+      "path": "image-blob/{filename}",
+      "connection": "QUEUE_ACCESS_KEY",
+      "direction": "out"
+    }
+  ],
+  "scriptFile": "../dist/UpdateFile/index.js"
+}
